@@ -40,4 +40,6 @@ cnpm install --save babel-polyfill fastclick
 cnpm install --save-dev node-sass 
 
 cnpm install sass-loader@7.3.1 --save-dev
+
+cnpm install --save vue-awesome-swiper
 ```
