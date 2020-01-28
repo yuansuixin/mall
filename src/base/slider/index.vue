@@ -1,5 +1,5 @@
 <template>
-    <swiper :options="swiperOption">
+    <swiper :options="swiperOption" :key="keyId">
         <slot></slot>
         <div class="swiper-pagination" v-if="pagination" slot="pagination"></div>
     </swiper>
@@ -35,11 +35,34 @@
       pagination: {
         type: Boolean,
         default: true
+      },
+      data: {
+        type: Array,
+        default() {
+          return [];
+        }
       }
     },
     data() {
       return {
-        swiperOption: {
+        keyId: Math.random()
+      };
+    },
+    watch: {
+      data(newData) {
+        if (newData.length === 0) {
+          return;
+        }
+        this.swiperOption.loop = newData.length === 1 ? false : this.loop;
+        this.keyId = Math.random();
+      }
+    },
+    created() {
+      this.init();
+    },
+    methods: {
+      init() {
+        this.swiperOption = {
           watchOverflow: true, // 只有1个slide（非loop），swiper会失效且隐藏导航等
           direction: this.direction,
           autoplay: this.interval ? {
@@ -47,12 +70,12 @@
             disableOnInteraction: false
           } : false,
           slidesPerView: 1, // 设置slider容器能够同时显示得slider数量
-          loop: this.loop,
+          loop: this.data.length <= 1 ? false : this.loop,
           pagination: {
             el: this.pagination ? '.swiper-pagination' : null
           }
-        }
-      };
+        };
+      }
     }
 
   };

@@ -1,6 +1,9 @@
 <template>
 <div class="slider-wrapper">
-<me-slider :direction="direction" :loop="loop" :interval="interval" :pagination="pagination">
+  <me-loading v-if="!sliders.length"></me-loading>
+<me-slider :data="sliders" :direction="direction" :loop="loop" :interval="interval" :pagination="pagination"
+v-else
+>
     <swiper-slide v-for="(item, index) in sliders" :key="index">
       <a :href="item.linkUrl" class="slider-link">
         <img :src="item.picUrl" alt class="slider-img" />
@@ -14,11 +17,15 @@
   import MeSlider from 'base/slider';
   import {swiperSlide} from 'vue-awesome-swiper';
   import {sliderOptions} from './config';
+  import {getHomeSlider} from 'api/home';
+  import MeLoading from 'base/loading';
+
   export default {
     name: 'HomeSlider',
     components: {
       MeSlider,
-      swiperSlide
+      swiperSlide,
+      MeLoading
     },
     data() {
       return {
@@ -45,6 +52,20 @@
           }
         ]
       };
+    },
+    created() {
+      this.getSliders();
+    },
+    methods: {
+      // api
+      update() {
+        return this.getSliders();
+      },
+      getSliders() {
+        return getHomeSlider().then(data => {
+          this.sliders = data;
+        });
+      }
     }
   };
 </script>

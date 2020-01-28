@@ -42,4 +42,8 @@ cnpm install --save-dev node-sass
 cnpm install sass-loader@7.3.1 --save-dev
 
 cnpm install --save vue-awesome-swiper
+
+cnpm install --save axios
+cnpm install --save jsonp
+cnpm install --save vue-lazyload
 ```
