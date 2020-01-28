@@ -117,7 +117,7 @@
         }
       },
       scrollEnd() {
-        this.$emit('scroll-end', swiper.translate, this.$refs.swiper.swiper);
+        this.$emit('scroll-end', this.$refs.swiper.swiper.translate, this.$refs.swiper.swiper, this.pulling);
       },
       touchEnd() {
         if (this.pulling) {
